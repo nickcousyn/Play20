@@ -308,5 +308,22 @@ class MessagesPlugin(app: Application) extends Plugin {
   override def onStart() {
     messages
   }
+  
+  
+  /**
+   * plugin is disabled if the plugin is explicitly disabled
+   */
+  private lazy val isDisabled = {
+    app.configuration.getString("messageplugin").filter(_ == "disabled").isDefined
+  }
+
+  /**
+   * Is this plugin enabled.
+   *
+   * {{{
+   * messageplugin=disabled
+   * }}}
+   */
+  override def enabled = isDisabled == false
 
 }
